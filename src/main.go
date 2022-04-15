@@ -4,8 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 func handler(w http.ResponseWriter, r *http.Request) {
+	hostname, err := os.Hostname()
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(r.URL.RawQuery)
 	fmt.Fprintf(w, `
           ##         .
@@ -17,9 +22,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
  \    \         __/
   \____\_______/
 	
-Hello from Docker!
+Hello from Docker %s!
 
-`)
+`, hostname)
 }
 func main() {
 	http.HandleFunc("/", handler)

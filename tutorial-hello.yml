@@ -23,7 +23,7 @@ metadata:
     com.docker.project: deployment-tutorial-hello
   name: deployment-tutorial-hello
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       com.docker.project: template-tutorial-hello
