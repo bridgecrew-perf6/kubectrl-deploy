@@ -1,0 +1,14 @@
+# nginx.yml
+# Create it with:
+#    kubectl apply -f nginx.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+      ports:
+        - containerPort: 80
+          name: http

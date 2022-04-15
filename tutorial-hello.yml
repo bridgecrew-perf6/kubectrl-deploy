@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-tutorial-hello
+spec:
+  ports:
+    - name: 80-tcp
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    com.docker.project: template-tutorial-hello
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    com.docker.project: deployment-tutorial-hello
+  name: deployment-tutorial-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      com.docker.project: template-tutorial-hello
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        com.docker.project: template-tutorial-hello
+    spec:
+      containers:
+        - image: hellodocker
+          name: hellodocker
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}
